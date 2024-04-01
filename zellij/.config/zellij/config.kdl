@@ -1,0 +1,52 @@
+// Reference: https://github.com/zellij-org/zellij/blob/main/zellij-utils/assets/config/default.kdl
+// If you'd like to override the default keybindings completely, be sure to change "keybinds" to "keybinds clear-defaults=true"
+keybinds {
+    unbind "Ctrl h"
+    normal {
+        // uncomment this and adjust key if using copy_on_select=false
+        // bind "Alt c" { Copy; }
+    }
+}
+
+//
+// Toggle between having pane frames around the panes
+// Options:
+//   - true (default)
+//   - false
+//
+pane_frames false
+
+// Define color themes for Zellij
+// For more examples, see: https://github.com/zellij-org/zellij/tree/main/example/themes
+// Once these themes are defined, one of them should to be selected in the "theme" section of this file
+//
+themes {
+    tokyo-night-storm {
+        fg 169 177 214
+        bg 36 40 59
+        black 56 62 90
+        red 249 51 87
+        green 158 206 106
+        yellow 224 175 104
+        blue 122 162 247
+        magenta 187 154 247
+        cyan 42 195 222
+        white 192 202 245
+        orange 255 158 100
+    }
+}
+
+// Choose the theme that is specified in the themes section.
+// Default: default
+//
+theme "tokyo-night-storm"
+
+// Choose the mode that zellij uses when starting up.
+// Default: normal
+//
+// default_mode "locked"
+
+// Enable or disable automatic copy (and clear) of selection when releasing mouse
+// Default: true
+//
+// copy_on_select false
