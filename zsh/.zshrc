@@ -159,3 +159,7 @@ export FZF_COMPLETION_OPTS="--height=70% --layout=reverse --border --info=right 
   --preview 'bat --color=always --style=numbers --line-range=:500 {}' \
   --preview-window=hidden"
 
+# bat
+# Set bat theme
+export BAT_THEME="TwoDark"
+
