@@ -148,3 +148,14 @@ export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
+# fzf
+# Set up fzf key bindings and fuzzy completion
+if (( $+commands[fzf] )); then
+  source <(fzf --zsh)
+fi
+# Options to fzf command
+export FZF_COMPLETION_OPTS="--height=70% --layout=reverse --border --info=right \
+  --bind '?:change-preview-window:down|right|hidden' \
+  --preview 'bat --color=always --style=numbers --line-range=:500 {}' \
+  --preview-window=hidden"
+
