@@ -60,3 +60,7 @@ zmodule zsh-users/zsh-autosuggestions
 
 # Powerlevel10k is a theme for Zsh.
 zmodule romkatv/powerlevel10k --use degit
+# Custom zim module for zoxide
+zmodule kiesman99/zim-zoxide
+# Adds aliases and better defaults for eza.
+zmodule exa
