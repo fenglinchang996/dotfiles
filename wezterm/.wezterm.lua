@@ -12,7 +12,7 @@ end
 
 -- This is where you actually apply your config choices
 
-config.color_scheme = "Tokyo Night Storm"
+config.color_scheme = "Tokyo Night"
 
 config.initial_cols = 150
 config.initial_rows = 45
