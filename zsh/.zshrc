@@ -156,9 +156,20 @@ if (( $+commands[fzf] )); then
   source <(fzf --zsh)
 fi
 # Options to fzf command
-export FZF_COMPLETION_OPTS="--height=70% --layout=reverse --border --info=right \
+if (( $+commands[bat] )); then
+  file_preview_cmd="bat --color=always --style=numbers --line-range=:500"
+else
+  file_preview_cmd="cat -n"
+fi
+if (( $+commands[tree] )); then
+  dir_preview_cmd="tree -a -C -L 1" 
+else
+  dir_preview_cmd="ls -a"
+fi
+  # --preview '[[ -d {} ]] && $dir_preview_cmd {} || $file_preview_cmd {}' \
+export FZF_DEFAULT_OPTS="--height=70% --layout=reverse --border --info=right \
   --bind '?:change-preview-window:down|right|hidden' \
-  --preview 'bat --color=always --style=numbers --line-range=:500 {}' \
+  --preview '[[ -d {} ]] && $dir_preview_cmd {} || $file_preview_cmd {}' \
   --preview-window=hidden"
 
 # bat
