@@ -5,6 +5,16 @@ keybinds {
     normal {
         // uncomment this and adjust key if using copy_on_select=false
         // bind "Alt c" { Copy; }
+        unbind "Ctrl o"
+        bind "Ctrl x" { SwitchToMode "Session"; }
+    }
+    session {
+        unbind "Ctrl o"
+        bind "Ctrl x" { SwitchToMode "Normal"; }
+    }
+    shared_except "session" "locked" {
+        unbind "Ctrl o"
+        bind "Ctrl x" { SwitchToMode "Session"; }
     }
 }
 
