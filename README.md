@@ -23,8 +23,10 @@ Symbolic links, or symlinks, are a type of file that points to another file or d
 In Unix-like systems, you can create symbolic links by using the `ln` command with the `-s` option.
 
 ```bash
-ln -s [target file or directory] [symlink name]
+ln -s [target file or directory] [symlink path]
 ```
+
+> Note that the `target file or directory` can be specified as either a relative path, relative to the`symlink path`, or as an absolute path. A symlink stores this path exactly as you provide it, as a string.
 
 For example, if you want to create a symbolic link named `link_to_file.txt` for `file.txt`, you can run the following command:
 
