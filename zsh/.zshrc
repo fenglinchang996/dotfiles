@@ -166,7 +166,7 @@ if (( $+commands[tree] )); then
 else
   dir_preview_cmd="ls -a"
 fi
-  # --preview '[[ -d {} ]] && $dir_preview_cmd {} || $file_preview_cmd {}' \
+
 export FZF_DEFAULT_OPTS="--height=70% --layout=reverse --border --info=right \
   --bind '?:change-preview-window:down|right|hidden' \
   --preview '[[ -d {} ]] && $dir_preview_cmd {} || $file_preview_cmd {}' \
