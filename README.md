@@ -18,6 +18,8 @@ For more information about Stow, please refer to [GNU Stow Manual](https://www.g
 
 Symbolic links, or symlinks, are a type of file that points to another file or directory by its path. It contains the path to the target file or directory, not the actual contents of the target.
 
+A symbolic link appears almost identical to the file it references. For instance, writing data to the symbolic link actually writes it to the target file. However, if you delete the symbolic link, only the link is removed, while the file remains intact. Conversely, if the original file is deleted before the link, the symbolic link will still exist but will point to nothing; it's then referred to as a "broken link." In many implementations, the `ls` command will display broken links in a distinct color, such as red, to alert the user to their status.
+
 ### Creating symbolic links
 
 In Unix-like systems, you can create symbolic links by using the `ln` command with the `-s` option.
