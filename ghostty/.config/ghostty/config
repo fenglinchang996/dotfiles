@@ -1,0 +1,15 @@
+font-family = "Liga SFMono Nerd Font"
+font-size = 18 
+adjust-cell-height = 30%
+
+window-decoration = "none"
+window-padding-x = 10
+window-padding-y = 10
+
+cursor-style = "block"
+cursor-style-blink = false
+
+theme = "tokyonight"
+background-opacity = 0.98
+
+keybind = ctrl+grave_accent=toggle_quick_terminal

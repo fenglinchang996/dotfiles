@@ -205,7 +205,7 @@ Now, with Stow, managing dotfiles in a version control system is much easier. We
 
 - Install packages (and their dependencies) related to the dotfiles:
 
-  - [WezTerm](https://wezfurlong.org/wezterm/index.html): Install [wezterm](https://wezfurlong.org/wezterm/installation.html)
+  - [Gohstty](https://ghostty.org): Install [gohstty](https://ghostty.org/docs/install/binary)
   - [Zsh](https://zsh.sourceforge.io): Built-in on MacOS/Linux. The configuration files of Zsh is `.zshrc`. Many packages add scripts to `.zshrc` for configuring their settings, including those I installed: [powerlevel10k](https://github.com/romkatv/powerlevel10k), [fzf](https://github.com/junegunn/fzf), [eza](https://github.com/eza-community/eza), [bat](https://github.com/sharkdp/bat), [tree](https://oldmanprogrammer.net/source.php?dir=projects/tree), [zoxide](https://github.com/ajeetdsouza/zoxide), [pyenv](https://github.com/pyenv/pyenv), and [nvm](https://github.com/nvm-sh/nvm).
   - [Vim](https://www.vim.org): Built-in on MacOS/Linux
   - [Zellij](https://zellij.dev): install [zellij](https://github.com/zellij-org/zellij/blob/main/docs/THIRD_PARTY_INSTALL.md)
@@ -227,7 +227,7 @@ Now, with Stow, managing dotfiles in a version control system is much easier. We
 
    ```bash
    cd $HOME/dotfiles
-   stow nvim vim wezterm zellij zim zsh
+   stow ghostty nvim vim zellij zim zsh
    ```
 
    The conflicts may occur if the target directory contains a file or symlink with the same name as the dotfile being stowed. Resolve the conflicts and then re-run the Stow command.
