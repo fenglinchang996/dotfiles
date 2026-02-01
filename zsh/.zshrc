@@ -168,7 +168,7 @@ else
 fi
 
 export FZF_DEFAULT_OPTS="--height=70% --layout=reverse --border --info=right \
-  --bind '?:change-preview-window:down|right|hidden' \
+  --bind '?:change-preview-window:right|down|hidden' \
   --preview '[[ -d {} ]] && $dir_preview_cmd {} || $file_preview_cmd {}' \
   --preview-window=hidden"
 
