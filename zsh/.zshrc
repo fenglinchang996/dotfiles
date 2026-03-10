@@ -138,6 +138,9 @@ unset key
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+# Set EDITOR to Neovim
+export EDITOR=nvim
+
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
@@ -161,7 +164,7 @@ if (( $+commands[tree] )); then
 else
   dir_preview_cmd="ls -a"
 fi
-
+# Set fzf default
 export FZF_DEFAULT_OPTS="--height=70% --layout=reverse --border --info=right \
   --bind '?:change-preview-window:right|down|hidden' \
   --preview '[[ -d {} ]] && $dir_preview_cmd {} || $file_preview_cmd {}' \
