@@ -178,4 +178,6 @@ export BAT_THEME="TwoDark"
 if output="$(mole completion zsh 2>/dev/null)"; then eval "$output"; fi
 
 # fnm
-eval "$(fnm env --use-on-cd)"
+if (( $+commands[fnm] )); then
+  eval "$(fnm env --use-on-cd)"
+fi
