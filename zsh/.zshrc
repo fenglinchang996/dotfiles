@@ -181,3 +181,23 @@ if output="$(mole completion zsh 2>/dev/null)"; then eval "$output"; fi
 if (( $+commands[fnm] )); then
   eval "$(fnm env --use-on-cd)"
 fi
+
+# C compiler
+cstrict() {
+    cc -std=c23 \
+       -Wall -Wextra -Wpedantic -pedantic-errors \
+       -Wconversion -Wsign-conversion -Wshadow \
+       -Wformat=2 -Wundef -Wvla -Werror \
+       "$@"
+}
+
+cdebug() {
+    cc -std=c23 \
+       -Wall -Wextra -Wpedantic -pedantic-errors \
+       -Wconversion -Wsign-conversion -Wshadow \
+       -Wformat=2 -Wundef -Wvla -Werror \
+       -g -O1 \
+       -fsanitize=address,undefined \
+       -fno-omit-frame-pointer \
+       "$@"
+}
