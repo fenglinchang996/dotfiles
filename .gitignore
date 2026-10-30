@@ -1,0 +1,30 @@
+# macOS system files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# Local and machine-specific overrides (secrets, local overrides, credentials)
+*.local
+*.local.*
+*.secret
+*.secret.*
+.env
+.env.*
+!.env.example
+
+# Backup and temporary files
+*.bak
+*.tmp
+*.swp
+*.swo
+*~
+
+# Shell runtime and cache files
+.zcompdump*
+.zsh_history
+.cache/
+
+# Log files
+*.log
