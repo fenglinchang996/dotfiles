@@ -10,6 +10,8 @@ keybinds {
         bind "Alt t" { NewTab; }
         bind "Alt x" { CloseFocus; }
         bind "Alt z" { ToggleFocusFullscreen; }
+        bind "Alt Shift Left" { GoToPreviousTab; }
+        bind "Alt Shift Right" { GoToNextTab; }
         bind "Alt 1" { GoToTab 1; }
         bind "Alt 2" { GoToTab 2; }
         bind "Alt 3" { GoToTab 3; }
@@ -36,6 +38,8 @@ keybinds {
         bind "Alt Right" { MoveFocusOrTab "Right"; }
         bind "Alt Down" { MoveFocus "Down"; }
         bind "Alt Up" { MoveFocus "Up"; }
+        bind "Alt Shift Left" { GoToPreviousTab; }
+        bind "Alt Shift Right" { GoToNextTab; }
         bind "Alt =" "Alt +" { Resize "Increase"; }
         bind "Alt -" { Resize "Decrease"; }
         bind "Alt [" { PreviousSwapLayout; }
