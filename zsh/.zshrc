@@ -141,13 +141,6 @@ unset key
 # Set EDITOR to Neovim
 export EDITOR=nvim
 
-# pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-if (( $+commands[pyenv] )); then
-  eval "$(pyenv init -)"
-fi
-
 # fzf
 # Set up fzf key bindings and fuzzy completion
 if (( $+commands[fzf] )); then
