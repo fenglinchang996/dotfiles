@@ -6,10 +6,10 @@ git:
   # Custom diff renderers using delta and Git built-ins
   # Press '|' in Lazygit to cycle between diff renderers, '\' to cycle back
   diffRenderers:
-    # 1. Default: Soft dark-toned tint tuned for TokyoNight themes
+    # 1. Default: Delta using theme configured in ~/.gitconfig
     - type: "stdinFilter"
       name: "delta"
-      command: "delta --dark --paging=never --line-numbers --minus-style 'syntax #2e1a24' --minus-emph-style 'syntax bold #612438' --plus-style 'syntax #162824' --plus-emph-style 'syntax bold #235342'"
+      command: "delta --paging=never"
       colorArg: "always"
 
     # 2. Built-in Git word-level diff (compact, inline token changes without external pager)

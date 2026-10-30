@@ -227,7 +227,7 @@ Now, with Stow, managing dotfiles in a version control system is much easier. We
 
    ```bash
    cd $HOME/dotfiles
-   stow ghostty lazygit nvim vim zellij zim zsh
+   stow ghostty git lazygit nvim vim zellij zim zsh
    ```
 
    The conflicts may occur if the target directory contains a file or symlink with the same name as the dotfile being stowed. Resolve the conflicts and then re-run the Stow command.
