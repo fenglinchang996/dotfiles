@@ -210,7 +210,7 @@ Now, with Stow, managing dotfiles in a version control system is much easier. We
   - [Vim](https://www.vim.org): Built-in on MacOS/Linux
   - [Zellij](https://zellij.dev): install [zellij](https://github.com/zellij-org/zellij/blob/main/docs/THIRD_PARTY_INSTALL.md)
   - [Zim](https://zimfw.sh/#install): Install [zim](https://github.com/zimfw/zimfw?tab=readme-ov-file#installation)
-  - [Neovim](https://neovim.io): Install [neovim](https://github.com/neovim/neovim/blob/master/INSTALL.md), [ripgrep](https://github.com/BurntSushi/ripgrep), [fd](https://github.com/sharkdp/fd), and [lazygit](https://github.com/jesseduffield/lazygit)
+  - [Neovim](https://neovim.io): Install [neovim](https://github.com/neovim/neovim/blob/master/INSTALL.md), [ripgrep](https://github.com/BurntSushi/ripgrep), [fd](https://github.com/sharkdp/fd), [lazygit](https://github.com/jesseduffield/lazygit), and [delta](https://github.com/dandavison/delta)
 
 ## Usage (For me)
 
@@ -227,7 +227,7 @@ Now, with Stow, managing dotfiles in a version control system is much easier. We
 
    ```bash
    cd $HOME/dotfiles
-   stow ghostty nvim vim zellij zim zsh
+   stow ghostty lazygit nvim vim zellij zim zsh
    ```
 
    The conflicts may occur if the target directory contains a file or symlink with the same name as the dotfile being stowed. Resolve the conflicts and then re-run the Stow command.
