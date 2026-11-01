@@ -1,107 +1,45 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
+# ------------------------------------------------------------------------------
+# 1. Powerlevel10k instant prompt (Should stay close to the top of ~/.zshrc)
+# ------------------------------------------------------------------------------
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# Start configuration added by Zim install {{{
-#
-# User configuration sourced by interactive shells
-#
+# ------------------------------------------------------------------------------
+# 2. Environment Variables
+# ------------------------------------------------------------------------------
+export XDG_CONFIG_HOME="$HOME/.config"
+export EDITOR="nvim"
+export BAT_THEME="TwoDark"
 
-# -----------------
-# Zsh configuration
-# -----------------
-
-#
-# History
-#
-
-# Remove older command from the history if a duplicate is to be added.
+# ------------------------------------------------------------------------------
+# 3. Zsh Options & Keymaps
+# ------------------------------------------------------------------------------
 setopt HIST_IGNORE_ALL_DUPS
-
-#
-# Input/output
-#
-
-# Set editor default keymap to emacs (`-e`) or vi (`-v`)
-bindkey -e
-
-# Prompt for spelling correction of commands.
-#setopt CORRECT
-
-# Customize spelling correction prompt.
-#SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
-
-# Remove path separator from WORDCHARS.
+setopt HIST_IGNORE_SPACE         # Commands starting with a space are not saved in history
+setopt INC_APPEND_HISTORY        # Write to history immediately to share across sessions
+bindkey -v
 WORDCHARS=${WORDCHARS//[\/]}
 
-# -----------------
-# Zim configuration
-# -----------------
+# Case-insensitive tab completion
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
-# Use degit instead of git as the default tool to install and update modules.
-#zstyle ':zim:zmodule' use 'degit'
+# ------------------------------------------------------------------------------
+# 4. Zim Framework
+# ------------------------------------------------------------------------------
+# Zim module settings
+zstyle ':zim:input' double-dot-expand yes
+zstyle ':zim:termtitle' hooks 'preexec' 'precmd'
+zstyle ':zim:termtitle:preexec' format '%25<..<%~%<<: ${${(Az)1}[1]}'
+zstyle ':zim:termtitle:precmd' format '%25<..<%~%<<'
 
-# --------------------
-# Module configuration
-# --------------------
-
-#
-# git
-#
-
-# Set a custom prefix for the generated aliases. The default prefix is 'G'.
-#zstyle ':zim:git' aliases-prefix 'g'
-
-#
-# input
-#
-
-# Append `../` to your input for each `.` you type after an initial `..`
-#zstyle ':zim:input' double-dot-expand yes
-
-#
-# termtitle
-#
-
-# Set a custom terminal title format using prompt expansion escape sequences.
-# See http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html#Simple-Prompt-Escapes
-# If none is provided, the default '%n@%m: %~' is used.
-#zstyle ':zim:termtitle' format '%1~'
-
-#
-# zsh-autosuggestions
-#
-
-# Disable automatic widget re-binding on each precmd. This can be set when
-# zsh-users/zsh-autosuggestions is the last module in your ~/.zimrc.
-ZSH_AUTOSUGGEST_MANUAL_REBIND=1
-
-# Customize the style that the suggestions are shown with.
-# See https://github.com/zsh-users/zsh-autosuggestions/blob/master/README.md#suggestion-highlight-style
-#ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=242'
-
-#
-# zsh-syntax-highlighting
-#
-
-# Set what highlighters will be used.
-# See https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters.md
+# Highlighting & Autosuggestions settings
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
-
-# Customize the main highlighter styles.
-# See https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters/main.md#how-to-tweak-it
-#typeset -A ZSH_HIGHLIGHT_STYLES
-#ZSH_HIGHLIGHT_STYLES[comment]='fg=242'
-
-# ------------------
-# Initialize modules
-# ------------------
+ZSH_AUTOSUGGEST_MANUAL_REBIND=1
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=242'
 
 ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim
-# Download zimfw plugin manager if missing.
+# Download zimfw plugin manager if missing (portable across macOS/Linux)
 if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
   if (( ${+commands[curl]} )); then
     curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh \
@@ -111,89 +49,92 @@ if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
         https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
   fi
 fi
-# Install missing modules, and update ${ZIM_HOME}/init.zsh if missing or outdated.
+
+# Install missing modules, and update init.zsh if missing or outdated
 if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZDOTDIR:-${HOME}}/.zimrc ]]; then
   source ${ZIM_HOME}/zimfw.zsh init -q
 fi
-# Initialize modules.
+# Initialize modules
 source ${ZIM_HOME}/init.zsh
 
-# ------------------------------
-# Post-init module configuration
-# ------------------------------
-
-#
-# zsh-history-substring-search
-#
-
+# Post-init: history-substring-search keybindings
 zmodload -F zsh/terminfo +p:terminfo
-# Bind ^[[A/^[[B manually so up/down works both before and after zle-line-init
 for key ('^[[A' '^P' ${terminfo[kcuu1]}) bindkey ${key} history-substring-search-up
 for key ('^[[B' '^N' ${terminfo[kcud1]}) bindkey ${key} history-substring-search-down
 for key ('k') bindkey -M vicmd ${key} history-substring-search-up
 for key ('j') bindkey -M vicmd ${key} history-substring-search-down
 unset key
-# }}} End configuration added by Zim install
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+# ------------------------------------------------------------------------------
+# 5. Prompt Configuration
+# ------------------------------------------------------------------------------
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# XDG Base Directory Specification
-export XDG_CONFIG_HOME="$HOME/.config"
-
-# Set EDITOR to Neovim
-export EDITOR=nvim
+# ------------------------------------------------------------------------------
+# 6. Modern CLI Tools Integrations
+# ------------------------------------------------------------------------------
+# git
+alias g="git"
 
 # fzf
-# Set up fzf key bindings and fuzzy completion
 if (( $+commands[fzf] )); then
   source <(fzf --zsh)
 fi
-# Options to fzf command
 if (( $+commands[bat] )); then
   file_preview_cmd="bat --color=always --style=numbers --line-range=:500"
 else
   file_preview_cmd="cat -n"
 fi
 if (( $+commands[tree] )); then
-  dir_preview_cmd="tree -a -C -L 1" 
+  dir_preview_cmd="tree -a -C -L 1"
 else
   dir_preview_cmd="ls -a"
 fi
-# Set fzf default
 export FZF_DEFAULT_OPTS="--height=70% --layout=reverse --border --info=right \
   --bind '?:change-preview-window:right|down|hidden' \
   --preview '[[ -d {} ]] && $dir_preview_cmd {} || $file_preview_cmd {}' \
   --preview-window=hidden"
 
-# bat
-# Set bat theme
-export BAT_THEME="TwoDark"
+# zoxide
+if (( $+commands[zoxide] )); then
+  eval "$(zoxide init zsh)"
+fi
 
-# Mole shell completion
-if output="$(mole completion zsh 2>/dev/null)"; then eval "$output"; fi
+# eza
+if (( $+commands[eza] )); then
+  alias ls="eza --icons --group-directories-first"
+  alias ll="eza -lh --icons --git --group-directories-first"
+  alias lt="eza --tree --level=2 --icons"
+fi
 
 # fnm
 if (( $+commands[fnm] )); then
   eval "$(fnm env --use-on-cd)"
 fi
 
-# C compiler
+# mole
+if (( $+commands[mole] )); then
+  eval "$(mole completion zsh 2>/dev/null)"
+fi
+
+# ------------------------------------------------------------------------------
+# 7. Custom Helper Functions
+# ------------------------------------------------------------------------------
 cstrict() {
-    cc -std=c23 \
-       -Wall -Wextra -Wpedantic -pedantic-errors \
-       -Wconversion -Wsign-conversion -Wshadow \
-       -Wformat=2 -Wundef -Wvla -Werror \
-       "$@"
+  cc -std=c23 \
+     -Wall -Wextra -Wpedantic -pedantic-errors \
+     -Wconversion -Wsign-conversion -Wshadow \
+     -Wformat=2 -Wundef -Wvla -Werror \
+     "$@"
 }
 
 cdebug() {
-    cc -std=c23 \
-       -Wall -Wextra -Wpedantic -pedantic-errors \
-       -Wconversion -Wsign-conversion -Wshadow \
-       -Wformat=2 -Wundef -Wvla -Werror \
-       -g -O1 \
-       -fsanitize=address,undefined \
-       -fno-omit-frame-pointer \
-       "$@"
+  cc -std=c23 \
+     -Wall -Wextra -Wpedantic -pedantic-errors \
+     -Wconversion -Wsign-conversion -Wshadow \
+     -Wformat=2 -Wundef -Wvla -Werror \
+     -g -O1 \
+     -fsanitize=address,undefined \
+     -fno-omit-frame-pointer \
+     "$@"
 }
