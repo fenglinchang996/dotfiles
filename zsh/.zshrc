@@ -17,12 +17,16 @@ export BAT_THEME="TwoDark"
 # ------------------------------------------------------------------------------
 setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_IGNORE_SPACE         # Commands starting with a space are not saved in history
-setopt INC_APPEND_HISTORY        # Write to history immediately to share across sessions
 bindkey -v
 WORDCHARS=${WORDCHARS//[\/]}
 
-# Case-insensitive tab completion
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+# Group directories before files in completion menus
+zstyle ':completion:*' list-dirs-first true
+
+# Keep ordinary globs from matching hidden files; use *(D) to include them explicitly
+unsetopt GLOB_DOTS
+# Exclude these entries from completion menus
+zstyle ':completion:*' ignored-patterns '(.DS_Store|.git)'
 
 # ------------------------------------------------------------------------------
 # 4. Zim Framework
@@ -57,6 +61,9 @@ fi
 # Initialize modules
 source ${ZIM_HOME}/init.zsh
 
+# Include hidden files only during completion (must follow compinit)
+_comp_options+=(globdots)
+
 # Post-init: history-substring-search keybindings
 zmodload -F zsh/terminfo +p:terminfo
 for key ('^[[A' '^P' ${terminfo[kcuu1]}) bindkey ${key} history-substring-search-up
@@ -76,24 +83,55 @@ unset key
 # git
 alias g="git"
 
-# fzf
+# 1. Unified preview commands (Shared across tools)
+if (( $+commands[eza] )); then
+  preview_dir_cmd="eza -1 --icons --color=always --group-directories-first --all --git-ignore --ignore-glob='.git'"
+else
+  preview_dir_cmd="ls -1A"
+fi
+
+if (( $+commands[bat] )); then
+  preview_file_cmd="bat --color=always --style=numbers --line-range=:200"
+else
+  preview_file_cmd="head -n 200"
+fi
+
+# 2. Global fzf configuration (Base settings inherited by other tools)
 if (( $+commands[fzf] )); then
   source <(fzf --zsh)
+
+  # Use fd for fast search: includes dotfiles, respects .gitignore, excludes .git/
+  if (( $+commands[fd] )); then
+    export FZF_DEFAULT_COMMAND="fd --type f --hidden --exclude .git"
+    export FZF_CTRL_T_COMMAND="fd --hidden --exclude .git"
+    export FZF_ALT_C_COMMAND="fd --type d --hidden --exclude .git"
+  fi
+
+  # Show preview on the right by default
+  export FZF_DEFAULT_OPTS="--height=70% --layout=reverse --border --info=right \
+    --preview 'if [ -d {} ]; then $preview_dir_cmd {}; elif [ -f {} ]; then $preview_file_cmd {}; fi' \
+    --preview-window=right:50%:wrap"
+
+  # History search: compact and clean (no preview)
+  export FZF_CTRL_R_OPTS="--no-preview"
 fi
-if (( $+commands[bat] )); then
-  file_preview_cmd="bat --color=always --style=numbers --line-range=:500"
-else
-  file_preview_cmd="cat -n"
-fi
-if (( $+commands[tree] )); then
-  dir_preview_cmd="tree -a -C -L 1"
-else
-  dir_preview_cmd="ls -a"
-fi
-export FZF_DEFAULT_OPTS="--height=70% --layout=reverse --border --info=right \
-  --bind '?:change-preview-window:right|down|hidden' \
-  --preview '[[ -d {} ]] && $dir_preview_cmd {} || $file_preview_cmd {}' \
-  --preview-window=hidden"
+
+# 3. fzf-tab (IntelliSense-like completion popup on Tab)
+zstyle ':completion:*:git-checkout:*' sort false
+zstyle ':completion:*:descriptions' format '[%d]'
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':fzf-tab:*' switch-group ',' '.'
+zstyle ':fzf-tab:*' fzf-flags '--preview-window=right:50%:wrap'
+
+# Disable preview for command options and flags to keep them 100% full-width
+zstyle ':fzf-tab:complete:*:*option*' fzf-preview ''
+
+# Directory previews for navigation commands (cd and zoxide)
+zstyle ':fzf-tab:complete:(cd|__zoxide_z|z):*' fzf-preview "$preview_dir_cmd \$realpath"
+
+# General file & directory preview for all commands (ls, cat, nvim, cp, etc.)
+# Mutually exclusive: previews directory contents if directory, or file content if file
+zstyle ':fzf-tab:complete:*:*' fzf-preview "if [[ -d \$realpath ]]; then $preview_dir_cmd \"\$realpath\"; elif [[ -f \$realpath ]]; then $preview_file_cmd \"\$realpath\"; fi"
 
 # zoxide
 if (( $+commands[zoxide] )); then
@@ -104,6 +142,7 @@ fi
 if (( $+commands[eza] )); then
   alias ls="eza --icons --group-directories-first"
   alias ll="eza -lh --icons --git --group-directories-first"
+  alias la="eza -lah --icons --git --group-directories-first"
   alias lt="eza --tree --level=2 --icons"
 fi
 

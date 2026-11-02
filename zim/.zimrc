@@ -15,6 +15,7 @@ zmodule romkatv/powerlevel10k --use degit
 #
 zmodule zsh-users/zsh-completions --fpath src
 zmodule completion
+zmodule Aloxaf/fzf-tab
 
 #
 # Modules that must be initialized last
