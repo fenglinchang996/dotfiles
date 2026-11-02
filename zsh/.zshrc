@@ -23,8 +23,6 @@ WORDCHARS=${WORDCHARS//[\/]}
 # Group directories before files in completion menus
 zstyle ':completion:*' list-dirs-first true
 
-# Keep ordinary globs from matching hidden files; use *(D) to include them explicitly
-unsetopt GLOB_DOTS
 # Exclude these entries from completion menus
 zstyle ':completion:*' ignored-patterns '(.DS_Store|.git)'
 
@@ -96,7 +94,7 @@ else
   preview_file_cmd="head -n 200"
 fi
 
-# 2. Global fzf configuration (Base settings inherited by other tools)
+# 2. Global fzf configuration (fzf-tab is configured separately below)
 if (( $+commands[fzf] )); then
   source <(fzf --zsh)
 
@@ -125,9 +123,6 @@ zstyle ':fzf-tab:*' fzf-flags '--preview-window=right:50%:wrap'
 
 # Disable preview for command options and flags to keep them 100% full-width
 zstyle ':fzf-tab:complete:*:*option*' fzf-preview ''
-
-# Directory previews for navigation commands (cd and zoxide)
-zstyle ':fzf-tab:complete:(cd|__zoxide_z|z):*' fzf-preview "$preview_dir_cmd \$realpath"
 
 # General file & directory preview for all commands (ls, cat, nvim, cp, etc.)
 # Mutually exclusive: previews directory contents if directory, or file content if file
@@ -168,11 +163,7 @@ cstrict() {
 }
 
 cdebug() {
-  cc -std=c23 \
-     -Wall -Wextra -Wpedantic -pedantic-errors \
-     -Wconversion -Wsign-conversion -Wshadow \
-     -Wformat=2 -Wundef -Wvla -Werror \
-     -g -O1 \
+  cstrict -g -O1 \
      -fsanitize=address,undefined \
      -fno-omit-frame-pointer \
      "$@"
