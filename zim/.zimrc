@@ -6,11 +6,6 @@ zmodule input
 zmodule termtitle
 
 #
-# Prompt
-#
-zmodule romkatv/powerlevel10k --use degit
-
-#
 # Completion
 #
 zmodule zsh-users/zsh-completions --fpath src

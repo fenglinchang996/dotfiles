@@ -1,19 +1,12 @@
 # ------------------------------------------------------------------------------
-# 1. Powerlevel10k instant prompt (Should stay close to the top of ~/.zshrc)
-# ------------------------------------------------------------------------------
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
-# ------------------------------------------------------------------------------
-# 2. Environment Variables
+# 1. Environment Variables
 # ------------------------------------------------------------------------------
 export XDG_CONFIG_HOME="$HOME/.config"
 export EDITOR="nvim"
 export BAT_THEME="TwoDark"
 
 # ------------------------------------------------------------------------------
-# 3. Zsh Options & Keymaps
+# 2. Zsh Options & Keymaps
 # ------------------------------------------------------------------------------
 setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_IGNORE_SPACE         # Commands starting with a space are not saved in history
@@ -27,7 +20,7 @@ zstyle ':completion:*' list-dirs-first true
 zstyle ':completion:*' ignored-patterns '(.DS_Store|.git)'
 
 # ------------------------------------------------------------------------------
-# 4. Zim Framework
+# 3. Zim Framework
 # ------------------------------------------------------------------------------
 # Zim module settings
 zstyle ':zim:input' double-dot-expand yes
@@ -71,12 +64,7 @@ for key ('j') bindkey -M vicmd ${key} history-substring-search-down
 unset key
 
 # ------------------------------------------------------------------------------
-# 5. Prompt Configuration
-# ------------------------------------------------------------------------------
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# ------------------------------------------------------------------------------
-# 6. Modern CLI Tools Integrations
+# 4. Modern CLI Tools Integrations
 # ------------------------------------------------------------------------------
 # git
 alias g="git"
@@ -152,7 +140,7 @@ if (( $+commands[mole] )); then
 fi
 
 # ------------------------------------------------------------------------------
-# 7. Custom Helper Functions
+# 5. Custom Helper Functions
 # ------------------------------------------------------------------------------
 cstrict() {
   cc -std=c23 \
@@ -168,3 +156,10 @@ cdebug() {
      -fno-omit-frame-pointer \
      "$@"
 }
+
+# ------------------------------------------------------------------------------
+# 6. Prompt Configuration
+# ------------------------------------------------------------------------------
+if (( $+commands[starship] )); then
+  eval "$(starship init zsh)"
+fi

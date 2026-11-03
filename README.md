@@ -206,10 +206,11 @@ Now, with Stow, managing dotfiles in a version control system is much easier. We
 - Install packages (and their dependencies) related to the dotfiles:
 
   - [Gohstty](https://ghostty.org): Install [gohstty](https://ghostty.org/docs/install/binary)
-  - [Zsh](https://zsh.sourceforge.io): Built-in on MacOS/Linux. The configuration files of Zsh is `.zshrc`. Many packages add scripts to `.zshrc` for configuring their settings, including those I installed: [powerlevel10k](https://github.com/romkatv/powerlevel10k), [fzf](https://github.com/junegunn/fzf), [eza](https://github.com/eza-community/eza), [bat](https://github.com/sharkdp/bat), [tree](https://oldmanprogrammer.net/source.php?dir=projects/tree), [zoxide](https://github.com/ajeetdsouza/zoxide), [pyenv](https://github.com/pyenv/pyenv), and [nvm](https://github.com/nvm-sh/nvm).
+  - [Zsh](https://zsh.sourceforge.io): Built-in on MacOS/Linux. The configuration files of Zsh is `.zshrc`. Many packages add scripts to `.zshrc` for configuring their settings, including those I installed: [Starship](https://starship.rs), [fzf](https://github.com/junegunn/fzf), [eza](https://github.com/eza-community/eza), [bat](https://github.com/sharkdp/bat), [tree](https://oldmanprogrammer.net/source.php?dir=projects/tree), [zoxide](https://github.com/ajeetdsouza/zoxide), [pyenv](https://github.com/pyenv/pyenv), and [nvm](https://github.com/nvm-sh/nvm).
   - [Vim](https://www.vim.org): Built-in on MacOS/Linux
   - [Zellij](https://zellij.dev): install [zellij](https://github.com/zellij-org/zellij/blob/main/docs/THIRD_PARTY_INSTALL.md)
   - [Zim](https://zimfw.sh/#install): Install [zim](https://github.com/zimfw/zimfw?tab=readme-ov-file#installation)
+  - [Starship](https://starship.rs): Install with `brew install starship`. Zsh uses `starship/.config/starship.toml` for its prompt configuration.
   - [Neovim](https://neovim.io): Install [neovim](https://github.com/neovim/neovim/blob/master/INSTALL.md), [ripgrep](https://github.com/BurntSushi/ripgrep), [fd](https://github.com/sharkdp/fd), [lazygit](https://github.com/jesseduffield/lazygit), and [delta](https://github.com/dandavison/delta)
 
 ## Usage (For me)
@@ -227,7 +228,7 @@ Now, with Stow, managing dotfiles in a version control system is much easier. We
 
    ```bash
    cd $HOME/dotfiles
-   stow ghostty git lazygit nvim vim zellij zim zsh
+   stow ghostty git lazygit nvim starship vim zellij zim zsh
    ```
 
    The conflicts may occur if the target directory contains a file or symlink with the same name as the dotfile being stowed. Resolve the conflicts and then re-run the Stow command.

@@ -1,0 +1,79 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+add_newline = false
+
+[line_break]
+disabled = true
+
+[git_status]
+ahead = '⇡${count}'
+behind = '⇣${count}'
+diverged = '⇕⇡${ahead_count}⇣${behind_count}'
+modified = '!${count}'
+staged = '+${count}'
+untracked = '?${count}'
+
+[package]
+disabled = true
+
+# Common symbols from Starship's nerd-font-symbols preset.
+[battery]
+full_symbol = '󰁹 '
+charging_symbol = '󰂄 '
+discharging_symbol = '󰂃 '
+unknown_symbol = '󰂑 '
+empty_symbol = '󰂎 '
+
+[directory]
+read_only = ' 󰌾'
+
+[hostname]
+ssh_symbol = ' '
+
+[git_branch]
+symbol = ' '
+
+[git_commit]
+tag_symbol = '  '
+
+[docker_context]
+symbol = ' '
+
+[container]
+symbol = ' '
+
+[c]
+symbol = ' '
+
+[cpp]
+symbol = ' '
+
+[cmake]
+symbol = ' '
+
+[python]
+symbol = ' '
+
+[nodejs]
+symbol = ' '
+
+[bun]
+symbol = ' '
+
+[deno]
+symbol = ' '
+
+[golang]
+symbol = ' '
+
+[rust]
+symbol = '󱘗 '
+
+[java]
+symbol = ' '
+
+[lua]
+symbol = ' '
+
+[swift]
+symbol = ' '
